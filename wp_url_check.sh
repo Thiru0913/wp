@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Define the URL of your WordPress site
-site_url="https://your-site.com"
+site_url="http://13.232.158.212/wordpress"
+
 
 # Send a cURL request to the site and store the HTTP response code in a variable
 response_code=$(curl --write-out %{http_code} --silent --output /dev/null $site_url)
