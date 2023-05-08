@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+    environment {
+        KEYPAIR_PATH = ''
+        FOLDER_SIZE = ''
+        REMOTE_SERVER = 'ubuntu@13.232.158.212'
+        REMOTEFOLDER_SIZE = ''
+       
+        
+    }
+
+    stages {
+        stage('git checkout') {
+            steps {
+                git branch: 'main', credentialsId: 'gitcred', url: 'https://github.com/Thiru0913/wp.git'
+
+            }
+        }
+        
+        stage('Active Theme check - Stage 1') {
+            steps {
+                script {
+                    def ACTIVE_THEME = sh(
+								script: 'wp theme list | grep -w active | awk \'{ print $1 }\'',
+								returnStdout: true
+							).trim()
+                   sh "echo '${ACTIVE_THEME}'"
+                }
+            }
+        }
+        stage('Connect to Remote Server') {
+            steps {
+                script {
+                    sshagent(['lampservercred']) {
+                        sshConnection = sh(script: "ssh -o StrictHostKeyChecking=no ubuntu@13.232.158.212", returnStdout: true).trim()
+                    }
+                }
+            }
+        }
+        
+        stage('Local Folders') {
+            steps {
+                script {
+                    // Define the path of the folder to get the size of
+                    def folderPath = "$WORKSPACE/$JOB_NAME/wp-content/themes/"
+                  
+                    // Use the du command to get the size of the folder in bytes
+                    def folderSize = sh(script: 'du -s ${folderPath} | awk \'{ print $1 }\'', returnStdout: true).trim()
+                    
+                    // Assign the folder size to the environment variable
+                    withEnv(["FOLDER_SIZE=${folderSize}"]) {
+                        // Print the folder size to the console
+                        echo "Folder size: ${FOLDER_SIZE}"
+                    }
+                    
+                }
+            
+            }
+        }
+        stage('Remote Folders') {
+            steps {
+                script {
+                    def REMOTEFOLDER_PATH = "/var/www/html/wordpress/wp-content/themes/"
+                    
+                    sshagent(['lampservercred']) {
+    				   sh 'ssh -tt ubuntu@13.232.158.212 echo "test"'
+    				   def remotefolderSize = sh(script: 'du -s ${REMOTEFOLDER_PATH} | awk \'{ print $1 }\'', returnStdout: true).trim()
+    				   
+    				   // Assign the folder size to the environment variable
+                        withEnv(["REMOTEFOLDER_SIZE=${remotefolderSize}"]) {
+                            // Print the folder size to the console
+                            echo "Folder size: ${REMOTEFOLDER_SIZE}"
+                     }
+                   }
+                }
+            }
+        
+        }
+    }
+}
