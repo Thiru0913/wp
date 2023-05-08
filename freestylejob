@@ -1,0 +1,100 @@
+Create on : 3rd May 2023
+
+Jenkins Freestyle Job
+
+To connect the remote server using ssh and execute linux commands on remote machines.
+
+Steps:
+
+Add the private key to credentials id instead of the pass the ssh key path. (for security)
+Goto Dashboard -> Manage jenkins ->  Manager credentials -> System configuration -> Global credentials ->  Click on add credentials.
+
+
+
+
+
+
+
+
+Select the below information
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		In the above screenshot choose file and select the .pem file and enter the ID and description.  And click on create.
+
+
+
+
+
+
+In the Jenkins dashboard, click on "New Item" to create a new job.
+Enter a name for the job and select "Freestyle project", then click "OK".
+In the "General" section of the job configuration, add your credentials for the remote server under Build  environment -> Select Use Secret text(s) or file (s)    check box.  -> Under Bindings -> click on add and select secret file -> enter variable -> and select the credential id which we added in the global credentials.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+In the "Build Steps" section, click on "Add build step" and select "Execute shell".
+In the "Command" field, enter the function code you want to use to connect to the remote server and execute commands. For example:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==============================================================
+
+#!/bin/bash
+
+# Define the function
+function remote_exec() {
+    ssh -o StrictHostKeyChecking=no -i $KEY_PATH ubuntu@43.204.143.129 "$1" "$2"
+}
+
+# Call the function with a command to execute on the remote server
+remote_exec "echo 'Hello, world!' > /tmp/templete.txt"
+remote_exec "sudo mkdir /opt/test"
+
+==============================================================
