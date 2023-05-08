@@ -1,0 +1,45 @@
+
+**To install minishift cluster in local machine with kvm driver**
+
+https://medium.com/@satriajanaka09/how-to-run-local-openshift-cluster-with-minishift-in-ubuntu-20-04-2a9229d7d119
+https://linuxhint.com/install-kvm-ubuntu-22-04/
+
+
+**How To Convert HTTP websites into HTTPS for FREE SSL For Your Website**
+https://www.youtube.com/watch?v=uomlqdrrjfs
+
+**What is CloudFlare | How To Configure CloudFlare CDN For Website for secury and performance**
+https://www.youtube.com/watch?v=Y3K7d1WbvsM
+
+
+**tekton tutorials Code in Action**
+https://www.youtube.com/watch?v=MEW2PXziXds&list=PLeLcvrwLe185j54ZV-CoPjeixY8GjEwVB
+
+
+
+
+TO CONNECT REMOTE SERVER AND EXECUTE LINUX COMMANDS
+
+$ chmod 400 /home/tvaddepudi/Downloads/testserver.pem
+$ sudo chown jenkins:jenkins /home/tvaddepudi/Downloads/testserver.pem
+
+
+
+#!/bin/bash
+
+# Define the function
+function remote_exec() {
+    ssh -o StrictHostKeyChecking=no -i /home/tvaddepudi/Downloads/testserver.pem ubuntu@43.204.143.129 "$1" "$2"
+}
+
+# Call the function with a command to execute on the remote server
+remote_exec "echo 'Hello, world!' > /tmp/templete.txt"
+remote_exec "echo 'Hello, world!' > /tmp/templete2.txt"
+
+**tekton pipelines scripts**    
+https://developers.redhat.com/blog/2021/01/13/getting-started-with-tekton-and-pipelines#what_s_a_pipeline_
+https://github.com/joellord/handson-tekton
+
+Portworkx 
+
+https://docs.portworx.com/reference/portworx-instructional-videos/
