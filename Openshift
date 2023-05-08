@@ -1,0 +1,70 @@
+Openshif Management tools
+	1) Web console
+	2) CLI
+	3) Rest API
+	
+	from oc (open shift cli too) oc console
+	
+To login from cli :
+
+oc login
+it will prompt for user name and password
+	
+oc login -u username -p password
+
+to login using the token. Below is the command:
+
+to get the token use below command:
+
+$ oc whoami -t 
+TtCPmxKpkaM_kjI2S1ceI03dreml_acN1CZUWchueos
+
+
+oc login https://192.168.42.30:8443 --token=TtCPmxKpkaM_kjI2S1ceI03dreml_acN1CZUWchueos
+
+Switch from one project to another project:
+oc porject <project name>
+
+to list the existing projects:
+oc projects
+
+oc logout command to logout from oc cluster
+
+** how to create new catalog 
+
+
+in Project:
+
+Build configurations
+Deployment configurations
+additional resources
+storage
+Monitoring
+
+users types:
+	1) Regular user  (developer )
+	2) system User	( admin account will manage the cluster.  this user will have the suffix as system:)
+	3) Service account (service account is use to communicate with internal services this will have the suffix of system:serviceaccount:proj1:db_user
+	
+
+
+auth server configuration:
+/etc/openshift/master/master-config.yaml
+
+to create a new administrator account from web console.  Login withe new user with webconsle and it will automatically allow and create the user in openshift
+
+to provide the admin access for newly created administrator execute the below command:
+
+$ oc adm policy add-cluster-role-to-user cluster-admin administrator
+clusterrole.rbac.authorization.k8s.io/cluster-admin added: "administrator"
+
+
+/* BUILDS & IMAGE STREAMS & DEPLOYMENT:
+
+
+
+
+
+
+
+
